@@ -11,7 +11,6 @@
     --text-light-gray: #CCCCCC;
     --success-color: #00FF00;
     --danger-color: #FF4444;
-    --warning-color: #FFC107; /* Warna default untuk SOLD/POPULER */
     --max-content-width: 1200px; 
 }
 
@@ -38,440 +37,651 @@ body {
 
 /* Container utama untuk membatasi lebar konten */
 .content-wrapper {
-    padding: 50px 20px;
     max-width: var(--max-content-width);
-    margin: 0 auto; 
-    position: relative; 
-    z-index: 1;
+    margin: 0 auto;
+    padding: 20px;
+    z-index: 10;
+    position: relative;
 }
 
-/* Judul diseragamkan untuk konsistensi warna glowing */
+/* Background Grid Effect */
+.background-grid {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 0;
+    background: 
+        linear-gradient(to right, rgba(0, 191, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 191, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* --- Header & Hero Section --- */
+.hero-section {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(180deg, var(--medium-blue) 0%, rgba(10, 10, 51, 0) 100%);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+#animated-hero-text {
+    font-size: 3.5em;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 10px;
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.5); /* Efek glowing */
+}
+
+.hero-subtext {
+    font-size: 1.2em;
+    color: var(--glowing-cyan);
+    margin-bottom: 30px;
+    border-right: 2px solid var(--glowing-cyan); /* Cursor typing effect */
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    padding-right: 5px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/* Tombol Aksi */
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.hero-button {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hero-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.youtube-button {
+    background-color: #FF0000;
+    color: var(--white);
+}
+
+.youtube-button:hover {
+    background-color: #CC0000;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+}
+
+.whatsapp-button {
+    background-color: #25D366;
+    color: var(--white);
+}
+
+.whatsapp-button:hover {
+    background-color: #1FAF59;
+    box-shadow: 0 0 20px rgba(37, 211, 102, 0.5);
+}
+
+.call-center-button {
+    background-color: var(--glowing-cyan);
+    color: var(--dark-blue);
+    font-weight: 700;
+}
+
+.call-center-button:hover {
+    background-color: var(--glowing-blue);
+    box-shadow: 0 0 20px var(--glowing-cyan);
+}
+
+
+/* --- Section Umum --- */
+.section-container {
+    padding: 40px 20px;
+    margin-bottom: 40px;
+    background-color: var(--medium-blue);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
 .section-title {
     font-size: 2.2em;
     font-weight: 700;
-    margin-bottom: 50px;
-    color: var(--glowing-cyan); 
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
     text-align: center;
-}
-
-/* ------------------------------------------- */
-/* --- ANIAMSI SCROLL (FADE-UP) BARU --- */
-/* ------------------------------------------- */
-
-/* Keadaan awal (tersembunyi dan sedikit ke bawah) */
-.animate-on-scroll {
-    opacity: 0;
-    transform: translateY(50px);
-    /* Transisi dikontrol oleh CSS */
-    transition: opacity 0.8s cubic-bezier(0.17, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.17, 0.84, 0.44, 1);
-}
-
-/* Keadaan saat terlihat (diberikan oleh JavaScript) */
-.animate-on-scroll.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* --- Latar Belakang Grid & Hero --- */
-.background-grid {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(to bottom, var(--dark-blue) 0%, var(--medium-blue) 50%, var(--light-blue) 100%);
-    background-size: 100% 100%; opacity: 0.9; z-index: -1; overflow: hidden;
-}
-.background-grid::before {
-    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px; 
-    mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent); 
-}
-.hero-section {
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    height: 60vh; text-align: center; position: relative; z-index: 1;
-}
-#animated-hero-text { 
-    font-size: 2.5em; font-weight: 700; margin-bottom: 10px; color: var(--white); 
-    text-shadow: 0 0 15px rgba(0, 191, 255, 0.5);
-    animation: pulseGlow 3s infinite alternate; 
-}
-.hero-subtext {
-    font-size: 1.2em;
-    font-weight: 400;
+    margin-bottom: 40px;
     color: var(--glowing-cyan);
-    margin-bottom: 30px;
-    opacity: 0; 
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
 }
 
-@keyframes pulseGlow {
-    0% { text-shadow: 0 0 5px rgba(0, 191, 255, 0.3); }
-    100% { text-shadow: 0 0 25px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.4); }
-}
 
-/* Gaya 3 tombol di Hero Section */
-.hero-buttons {
-    display: flex;
-    gap: 20px; 
-    margin-top: 30px;
-    flex-wrap: wrap; 
-    justify-content: center;
-}
-.hero-button {
-    background: linear-gradient(145deg, var(--light-blue), var(--glowing-blue)); border: none;
-    border-radius: 15px; padding: 15px 35px; font-size: 1.2em; font-weight: 600; color: var(--white);
-    box-shadow: 0 0 20px var(--glowing-blue), 0 0 40px rgba(0, 191, 255, 0.7); 
-    transition: all 0.3s ease; cursor: pointer;
-    text-decoration: none; 
-    display: inline-flex; 
-    align-items: center;
-    gap: 10px; 
-}
-.hero-button:hover { 
-    box-shadow: 0 0 30px var(--glowing-cyan), 0 0 60px rgba(0, 255, 255, 0.9); 
-    transform: translateY(-3px); 
-}
-.hero-button i {
-    font-size: 1.2em;
-}
-
-/* --- Section Containers --- */
-.section-container {
-    padding: 50px 0;
-    margin-top: 30px;
-    text-align: center;
-}
-
-/* Gaya untuk About Section */
-.about-section {
-    text-align: center;
-}
+/* --- About Section --- */
 .about-content {
-    max-width: 900px; 
+    max-width: 800px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
-    padding: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 20px rgba(0, 191, 255, 0.2);
+    text-align: center;
 }
-.about-content p {
-    font-size: 1.1em;
+
+.justify-text {
+    text-align: justify;
+    margin-bottom: 20px;
     line-height: 1.6;
     color: var(--text-light-gray);
-    margin-bottom: 15px;
-}
-.justify-text {
-    text-align: justify; /* Rata kanan kiri */
-}
-.read-more-button {
-    margin-top: 20px;
-    background: var(--light-blue);
-    color: var(--white);
-    text-decoration: none;
-    display: inline-flex; 
-    align-items: center;
-    gap: 10px;
-}
-.read-more-button:hover {
-    background: var(--glowing-blue);
 }
 
-/* --- Product Grid & Cards (Glassmorphism) --- */
+.read-more-button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: 2px solid var(--glowing-cyan);
+    color: var(--glowing-cyan);
+    background: none;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.read-more-button:hover {
+    background-color: var(--glowing-cyan);
+    color: var(--dark-blue);
+}
+
+/* --- Product Section --- */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
+    padding: 0 20px;
 }
-.product-card, .testimonial-card, .stat-card {
-    background: rgba(255, 255, 255, 0.05); border-radius: 20px; backdrop-filter: blur(10px); 
-    border: 1px solid rgba(255, 255, 255, 0.1); padding: 30px; display: flex; flex-direction: column;
-    align-items: center; box-shadow: 0 0 30px rgba(0, 191, 255, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+.product-card {
+    background-color: var(--dark-blue);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid rgba(0, 255, 255, 0.1);
+    padding-bottom: 20px;
     text-align: center;
 }
-.product-card:hover { transform: translateY(-10px); box-shadow: 0 0 40px rgba(0, 255, 255, 0.4); }
 
-/* REVISI: Style untuk Info Produk (Harga dan Status) */
-.product-price {
-    font-size: 1.4em;
-    font-weight: 700;
-    color: var(--success-color);
-    margin: 10px 0 5px 0;
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 255, 255, 0.2);
 }
 
-.product-status {
+.product-image img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.product-title {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin: 15px 10px 5px;
+    color: var(--glowing-cyan);
+}
+
+.product-description {
     font-size: 0.9em;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    color: var(--text-light-gray);
+    margin: 0 10px 20px;
+    min-height: 40px;
 }
-/* Status LAMA */
-.status-new { background-color: var(--glowing-cyan); color: var(--dark-blue); }
-.status-coming { background-color: var(--light-blue); color: var(--white); }
-/* Status BARU yang disesuaikan */
-.status-populer { 
-    background-color: var(--warning-color); 
-    color: var(--dark-blue); 
-    box-shadow: 0 0 10px var(--warning-color);
-}
-.status-new-update { 
-    background: linear-gradient(45deg, var(--glowing-cyan), var(--glowing-blue));
-    color: var(--dark-blue);
-    box-shadow: 0 0 10px var(--glowing-cyan);
-}
-.status-akan-habis { 
-    background-color: var(--danger-color); 
-    color: var(--white); 
-    box-shadow: 0 0 10px var(--danger-color);
-}
-.status-stock-update { 
-    background-color: var(--text-light-gray); 
-    color: var(--dark-blue);
-}
-/* End of Product Status Styles */
 
 .buy-now-button {
-    background: linear-gradient(90deg, #007BFF, #00BFFF); border: none; border-radius: 10px;
-    padding: 15px 30px; font-size: 1.1em; font-weight: 600; color: var(--white); cursor: pointer;
-    box-shadow: 0 0 15px rgba(0, 191, 255, 0.4); transition: all 0.3s ease; display: flex; align-items: center; gap: 10px; margin-top: 20px;
+    background-color: var(--success-color);
+    color: var(--dark-blue);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
-.buy-now-button:hover { background: linear-gradient(90deg, #00BFFF, #00FFFF); box-shadow: 0 0 20px rgba(0, 255, 255, 0.6); transform: translateY(-2px); }
 
+.buy-now-button:hover {
+    background-color: #00CC00;
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 255, 0, 0.4);
+}
+
+.arrow-icon {
+    font-weight: 900;
+}
 
 /* --- Video Section --- */
-.video-container { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Mengatur 2x2 grid */
-    justify-content: center; 
-    gap: 30px; 
-    flex-wrap: wrap; 
+.video-section {
+    text-align: center;
 }
-.youtube-video { 
-    width: 100%; 
-    height: 200px; /* Ukuran yang lebih kecil agar muat 4 dalam grid */
-    border-radius: 15px; 
-    box-shadow: 0 0 20px rgba(0, 191, 255, 0.6); 
+
+.video-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }
-.youtube-video:hover { transform: scale(1.02); box-shadow: 0 0 30px rgba(0, 255, 255, 0.8); }
+
+.youtube-video {
+    width: 100%;
+    max-width: 560px; /* Lebar standar video YouTube */
+    height: 315px; /* Tinggi standar video YouTube */
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--glowing-cyan);
+}
 
 /* --- Testimonials Section --- */
 .testimonials-carousel {
-    display: flex; gap: 30px; padding-bottom: 20px; overflow-x: auto; 
-    scroll-snap-type: x mandatory; max-width: 100%; padding-left: 20px;
+    display: flex;
+    overflow-x: auto;
+    gap: 30px;
+    padding-bottom: 20px; /* Untuk scrollbar */
+    justify-content: flex-start;
+    align-items: stretch;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
 }
-.testimonial-card { flex: 0 0 350px; scroll-snap-align: start; min-width: 280px; }
-.testimonial-card:hover { transform: translateY(-5px); box-shadow: 0 0 35px rgba(0, 255, 255, 0.5); }
-.testimonial-img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; border: 3px solid var(--glowing-blue); box-shadow: 0 0 15px rgba(0, 191, 255, 0.6); }
 
-/* --- STATS/PENGGUNA AKTIF --- */
-.stats-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
-.stat-card { flex: 1 1 300px; }
-.stat-card:hover { transform: translateY(-5px); box-shadow: 0 0 40px rgba(0, 255, 255, 0.4); }
-.stat-icon { font-size: 3em; color: var(--glowing-cyan); margin-bottom: 15px; text-shadow: 0 0 10px rgba(0, 255, 255, 0.8); }
-.stat-number { font-size: 2.2em; font-weight: 700; margin: 0; color: var(--white); }
+.testimonial-card {
+    min-width: 300px; /* Lebar minimum untuk setiap kartu */
+    flex: 0 0 auto;
+    background-color: var(--dark-blue);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    scroll-snap-align: start;
+    border-left: 5px solid var(--glowing-cyan);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.testimonial-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 15px;
+    border: 3px solid var(--glowing-cyan);
+}
+
+.testimonial-text {
+    font-style: italic;
+    color: var(--text-light-gray);
+    margin-bottom: 15px;
+    flex-grow: 1;
+}
+
+.testimonial-author {
+    font-weight: 600;
+    color: var(--glowing-cyan);
+    margin-top: 10px;
+}
+
+/* --- Stats Section --- */
+.stats-grid {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background-color: var(--dark-blue);
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 200px;
+    flex: 1;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 255, 255, 0.1);
+    transition: transform 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-icon {
+    font-size: 2.5em;
+    color: var(--glowing-cyan);
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px var(--glowing-cyan);
+}
+
+.stat-number {
+    font-size: 2em;
+    font-weight: 700;
+    margin: 0;
+    color: var(--white);
+}
+
+.stat-label {
+    font-size: 1em;
+    color: var(--text-light-gray);
+    margin-top: 5px;
+}
+
 
 /* --- Footer --- */
 .footer {
-    text-align: center; padding: 40px 20px; color: var(--text-light-gray); font-size: 0.9em; 
-    position: relative; z-index: 1;
-    max-width: var(--max-content-width); margin: 0 auto;
+    text-align: center;
+    padding: 40px 20px;
+    background-color: var(--medium-blue);
+    border-top: 2px solid var(--glowing-cyan);
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
 }
+
 .footer-text-large {
     font-size: 1.1em;
     font-weight: 600;
     color: var(--glowing-cyan);
     margin-bottom: 5px;
 }
+
 .footer-text-small {
     font-size: 0.9em;
     color: var(--text-light-gray);
-    margin-bottom: 5px;
-}
-.watermark {
-    font-weight: 700;
-    color: var(--white);
-    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
-    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
-/* --- Gaya Modal (Pop-up Transaksi & Call Center) --- */
+.watermark {
+    font-size: 0.8em;
+    color: var(--text-light-gray);
+    opacity: 0.7;
+}
+
+/* --- Modal (Pop-up) Styling --- */
 .modal {
-    display: none; position: fixed; z-index: 1000; left: 0; top: 0;
-    width: 100%; height: 100%; overflow: auto; 
-    background-color: rgba(0,0,0,0.8); backdrop-filter: blur(10px); 
-    padding-top: 60px;
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.8); 
+    backdrop-filter: blur(5px);
 }
+
 .modal-content {
-    background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: var(--dark-blue);
     margin: 5% auto; 
-    padding: 40px 30px; border-radius: 20px;
-    width: 90%; max-width: 550px; 
-    box-shadow: 0 0 50px rgba(0, 191, 255, 0.5);
-    position: relative; color: var(--white);
-    animation: fadeIn 0.3s ease-out; 
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+    padding: 30px;
+    border: 3px solid var(--glowing-cyan);
+    width: 90%; 
+    max-width: 500px;
+    border-radius: 15px;
+    position: relative;
+    box-shadow: 0 0 40px rgba(0, 255, 255, 0.5);
 }
 
 .close-button {
-    color: var(--text-light-gray); float: right; font-size: 32px; font-weight: bold;
-    transition: color 0.3s; position: absolute; top: 15px; right: 25px;
-}
-.close-button:hover, .close-button:focus { color: var(--glowing-cyan); text-decoration: none; cursor: pointer; }
-
-#modal-header { margin-bottom: 30px; text-align: center; }
-.modal-title { font-size: 1.8em; font-weight: 700; color: var(--glowing-cyan); text-shadow: 0 0 10px rgba(0, 255, 255, 0.4); margin-bottom: 20px; }
-
-/* Tombol Utama dan Kedua */
-.btn-primary, .btn-secondary {
-    border: none; border-radius: 12px; padding: 15px 30px; font-size: 1.1em;
-    font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-align: center;
-    text-decoration: none; display: inline-flex; justify-content: center;
-    align-items: center; gap: 10px; width: 100%; box-sizing: border-box;
-}
-.btn-primary { 
-    background: linear-gradient(90deg, var(--glowing-blue), var(--glowing-cyan)); 
-    color: var(--dark-blue); 
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
-}
-.btn-primary:hover:not(:disabled) { 
-    box-shadow: 0 0 25px var(--glowing-cyan); 
-    transform: translateY(-2px); 
-}
-.btn-secondary { 
-    background: var(--danger-color); 
-    color: var(--white); 
-    box-shadow: 0 0 15px rgba(255, 68, 68, 0.5);
-}
-.btn-secondary:hover:not(:disabled) { 
-    box-shadow: 0 0 25px var(--danger-color); 
-    transform: translateY(-2px); 
-}
-.btn-primary:disabled, .btn-secondary:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
+    color: var(--glowing-cyan);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    transition: color 0.3s;
 }
 
-.btn-large { padding: 18px 40px; font-size: 1.2em; }
-.modal-buttons { display: flex; flex-direction: column; gap: 15px; margin-top: 25px; }
-.modal-question { font-size: 1.1em; font-weight: 400; text-align: center; color: var(--text-light-gray); margin-bottom: 20px; }
-.modal-form-group { text-align: left; margin-bottom: 25px; } 
-.form-label { display: block; margin-top: 15px; margin-bottom: 8px; font-weight: 600; color: var(--glowing-cyan); }
-.form-input {
-    width: 100%; padding: 12px; border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.3); background: rgba(0, 0, 0, 0.3); 
-    color: var(--white); font-size: 1em; box-sizing: border-box; transition: border-color 0.3s;
+.close-button:hover,
+.close-button:focus {
+    color: var(--danger-color);
+    text-decoration: none;
+    cursor: pointer;
 }
-.form-input:focus { outline: none; border-color: var(--glowing-blue); box-shadow: 0 0 8px rgba(0, 191, 255, 0.5); }
 
-
-/* --- Gaya Khusus Modal QRIS --- */
-.qris-container {
-    padding: 10px 0;
+#modal-header {
     text-align: center;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    /* Membuat QRIS full sisi kanan kiri */
-    margin: 0 -30px 20px -30px; /* Offset padding 30px dari modal-content */
-    padding: 20px 30px; 
-    background: rgba(255, 255, 255, 0.05);
+    margin-bottom: 25px;
 }
-.qris-image {
-    width: 100%;
-    max-width: 250px;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
-    margin-bottom: 10px;
+
+.modal-title {
+    color: var(--white);
+    font-size: 1.8em;
+    margin: 20px 0 10px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
-.qris-info {
-    font-size: 1em;
+
+.modal-question {
     color: var(--text-light-gray);
-    line-height: 1.4;
-    margin-top: 10px;
-}
-.qris-option {
+    margin-bottom: 20px;
     font-size: 1.1em;
+    text-align: center;
+}
+
+.modal-form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
     font-weight: 600;
     color: var(--glowing-cyan);
-    margin-top: 5px;
 }
 
-/* Upload Button Styling (Stage 2) */
+.form-input, .modal-buttons button, .qris-option, .upload-button, #e-wallet-select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid var(--glowing-cyan);
+    background-color: var(--medium-blue);
+    color: var(--white);
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, opacity 0.3s;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: var(--glowing-cyan);
+    color: var(--dark-blue);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--glowing-blue);
+    transform: translateY(-2px);
+}
+
+.btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background-color: var(--medium-blue);
+    color: var(--text-light-gray);
+    border: 1px solid var(--text-light-gray);
+}
+
+.btn-secondary:hover {
+    background-color: var(--dark-blue);
+    color: var(--white);
+}
+
+.qris-container {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--medium-blue);
+    border-radius: 10px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.qris-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+}
+
+.qris-info {
+    font-size: 0.9em;
+    color: var(--text-light-gray);
+    line-height: 1.5;
+}
+
+.qris-option {
+    margin-top: 15px;
+    padding: 8px;
+    font-weight: 600;
+    background-color: var(--dark-blue);
+    border-radius: 5px;
+    border: 1px dashed var(--glowing-cyan);
+    color: var(--glowing-cyan);
+}
+
 .upload-button {
     display: block;
-    cursor: pointer;
-    background: var(--medium-blue);
-    border: 2px dashed var(--glowing-cyan);
-    border-radius: 10px;
-    padding: 20px;
     text-align: center;
-    font-size: 1.1em;
-    font-weight: 600;
+    background-color: var(--light-blue);
     color: var(--white);
-    transition: background 0.3s;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
+
 .upload-button:hover {
-    background: var(--light-blue);
+    background-color: #0069D9;
 }
+
 .file-name-display {
     margin-top: 10px;
     font-size: 0.9em;
     color: var(--text-light-gray);
+    text-align: center;
 }
 
-
-/* Step 3 & 4 Status Display */
-.glowing-icon { text-shadow: 0 0 20px rgba(0, 255, 255, 0.8); margin-bottom: 20px; }
-.modal-status-heading { font-size: 1.5em; font-weight: 700; color: var(--white); margin: 10px 0; }
-.modal-status-text { color: var(--text-light-gray); margin-bottom: 5px; }
-
-/* Progress Bar Simulasi (Call Center Step 2) */
-.progress-container {
-    width: 80%;
-    margin: 20px auto;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-    height: 10px;
-    overflow: hidden;
-}
-.simulated-progress-bar {
-    height: 100%;
-    width: 0;
-    background: linear-gradient(90deg, var(--glowing-blue), var(--glowing-cyan));
-    box-shadow: 0 0 5px var(--glowing-cyan);
-    transition: width 0.3s ease-out;
+/* Status Icons & Messages */
+.status-icon {
+    margin-bottom: 20px;
 }
 
-/* Progress Bar Status (4 Langkah) */
+.glowing-icon {
+    text-shadow: 0 0 20px var(--glowing-cyan);
+    animation: pulse 1.5s infinite alternate;
+}
+
+.glowing-icon[style*="var(--success-color)"] {
+    text-shadow: 0 0 20px var(--success-color);
+}
+
+@keyframes pulse {
+    from { opacity: 0.8; transform: scale(1.0); }
+    to { opacity: 1.0; transform: scale(1.05); }
+}
+
+.modal-status-heading {
+    font-size: 1.5em;
+    color: var(--white);
+    margin-bottom: 10px;
+}
+
+.modal-status-text {
+    font-size: 1em;
+    color: var(--text-light-gray);
+}
+
+/* Progress Bar for Modals */
 .progress-bar {
-    display: flex; justify-content: space-between; align-items: center; margin: 0 auto 20px;
-    width: 80%; position: relative;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto 20px;
 }
-.progress-bar::before {
-    content: ''; position: absolute; width: 100%; height: 4px;
-    background: rgba(255, 255, 255, 0.2); top: 50%; transform: translateY(-50%); z-index: 0;
-}
+
 .progress-line {
-    position: absolute; left: 0; top: 50%; height: 4px; width: 0; 
-    background: var(--glowing-cyan); transform: translateY(-50%); z-index: 1;
-    transition: width 0.4s ease-in-out; box-shadow: 0 0 10px var(--glowing-cyan);
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2); 
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.progress-line::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    width: 0; /* Dikontrol oleh JS */
+    background: var(--glowing-cyan); 
+    transform: translateY(-50%); 
+    z-index: 1;
+    transition: width 0.4s ease-in-out;
+    box-shadow: 0 0 10px var(--glowing-cyan);
 }
 .progress-step {
-    width: 15px; height: 15px; border-radius: 50%; background: rgba(255, 255, 255, 0.4);
-    transition: background 0.4s, transform 0.4s; z-index: 2; position: relative;
+    width: 15px; 
+    height: 15px; 
+    border-radius: 50%; 
+    background: rgba(255, 255, 255, 0.4);
+    transition: background 0.4s, transform 0.4s; 
+    z-index: 2; 
+    position: relative;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
+
 .progress-step.active {
-    background: var(--glowing-cyan); transform: scale(1.2); box-shadow: 0 0 15px var(--glowing-cyan);
+    background: var(--glowing-cyan); 
+    transform: scale(1.2); 
+    box-shadow: 0 0 15px var(--glowing-cyan);
 }
+
 .progress-step.complete {
-    background: var(--success-color); box-shadow: 0 0 15px var(--success-color);
+    background: var(--success-color); 
+    box-shadow: 0 0 15px var(--success-color);
 }
 
 /* --- Responsiveness (HP/Mobile) --- */
@@ -480,16 +690,15 @@ body {
     .hero-subtext { font-size: 1em; }
     .hero-buttons { flex-direction: column; }
     .hero-button { width: 100%; padding: 12px 20px; font-size: 1.1em; }
-    .section-title { font-size: 1.8em; margin-bottom: 30px; }
-    .about-content { padding: 20px; }
-    .product-grid { grid-template-columns: 1fr; }
-    .youtube-video { height: 200px; max-width: 100%; } /* Sesuaikan tinggi video di mobile */
-    .testimonials-carousel { padding-left: 15px; } 
-    .testimonial-card { flex: 0 0 85vw; }
-    .stat-card { min-width: 100%; flex: 1 1 100%; }
-    .stat-number { font-size: 1.8em; }
-    .modal-content { margin: 15% auto; max-width: 90%; }
-    .qris-container { margin: 0 -20px 20px -20px; padding: 20px; }
-    .modal-buttons { flex-direction: column; }
-    .btn-large { width: 100%; }
+    .section-title { font-size: 1.8em; }
+    .product-grid { grid-template-columns: 1fr; padding: 0; }
+    .youtube-video { height: 200px; }
+    .video-container { flex-direction: column; gap: 15px; }
+    .testimonials-carousel { justify-content: flex-start; }
+    .testimonial-card { min-width: 90%; }
+    .stats-grid { flex-direction: column; }
+    .stat-card { min-width: auto; }
+    .modal-content { margin: 15% auto; padding: 20px; }
+    .modal-buttons { flex-direction: column; gap: 10px; }
+    .btn-large { font-size: 1em; }
 }
