@@ -11,7 +11,7 @@
     --text-light-gray: #CCCCCC;
     --success-color: #00FF00;
     --danger-color: #FF4444;
-    --warning-color: #FFC107; /* Warna baru untuk status seperti SOLD */
+    --warning-color: #FFC107; /* Warna default untuk SOLD/POPULER */
     --max-content-width: 1200px; 
 }
 
@@ -53,6 +53,24 @@ body {
     color: var(--glowing-cyan); 
     text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
     text-align: center;
+}
+
+/* ------------------------------------------- */
+/* --- ANIAMSI SCROLL (FADE-UP) BARU --- */
+/* ------------------------------------------- */
+
+/* Keadaan awal (tersembunyi dan sedikit ke bawah) */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(50px);
+    /* Transisi dikontrol oleh CSS */
+    transition: opacity 0.8s cubic-bezier(0.17, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.17, 0.84, 0.44, 1);
+}
+
+/* Keadaan saat terlihat (diberikan oleh JavaScript) */
+.animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* --- Latar Belakang Grid & Hero --- */
@@ -188,14 +206,30 @@ body {
     margin-bottom: 15px;
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
+/* Status LAMA */
 .status-new { background-color: var(--glowing-cyan); color: var(--dark-blue); }
-.status-sold { background-color: var(--warning-color); color: var(--dark-blue); }
-.status-habis { background-color: var(--danger-color); color: var(--white); }
 .status-coming { background-color: var(--light-blue); color: var(--white); }
+/* Status BARU yang disesuaikan */
+.status-populer { 
+    background-color: var(--warning-color); 
+    color: var(--dark-blue); 
+    box-shadow: 0 0 10px var(--warning-color);
+}
+.status-new-update { 
+    background: linear-gradient(45deg, var(--glowing-cyan), var(--glowing-blue));
+    color: var(--dark-blue);
+    box-shadow: 0 0 10px var(--glowing-cyan);
+}
+.status-akan-habis { 
+    background-color: var(--danger-color); 
+    color: var(--white); 
+    box-shadow: 0 0 10px var(--danger-color);
+}
+.status-stock-update { 
+    background-color: var(--text-light-gray); 
+    color: var(--dark-blue);
+}
 /* End of Product Status Styles */
-
-/* Hapus style product-image karena elemennya sudah dihapus dari HTML */
-/* .product-image { ... } */
 
 .buy-now-button {
     background: linear-gradient(90deg, #007BFF, #00BFFF); border: none; border-radius: 10px;
@@ -206,8 +240,19 @@ body {
 
 
 /* --- Video Section --- */
-.video-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
-.youtube-video { width: 100%; max-width: 560px; height: 315px; border-radius: 15px; box-shadow: 0 0 20px rgba(0, 191, 255, 0.6); }
+.video-container { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Mengatur 2x2 grid */
+    justify-content: center; 
+    gap: 30px; 
+    flex-wrap: wrap; 
+}
+.youtube-video { 
+    width: 100%; 
+    height: 200px; /* Ukuran yang lebih kecil agar muat 4 dalam grid */
+    border-radius: 15px; 
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.6); 
+}
 .youtube-video:hover { transform: scale(1.02); box-shadow: 0 0 30px rgba(0, 255, 255, 0.8); }
 
 /* --- Testimonials Section --- */
@@ -344,7 +389,6 @@ body {
     box-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
     margin-bottom: 10px;
 }
-/* Style di bawah ini dipertahankan karena tidak mengganggu, tapi tidak ada di HTML saat ini */
 .qris-info {
     font-size: 1em;
     color: var(--text-light-gray);
@@ -439,7 +483,7 @@ body {
     .section-title { font-size: 1.8em; margin-bottom: 30px; }
     .about-content { padding: 20px; }
     .product-grid { grid-template-columns: 1fr; }
-    .youtube-video { height: 250px; max-width: 100%; }
+    .youtube-video { height: 200px; max-width: 100%; } /* Sesuaikan tinggi video di mobile */
     .testimonials-carousel { padding-left: 15px; } 
     .testimonial-card { flex: 0 0 85vw; }
     .stat-card { min-width: 100%; flex: 1 1 100%; }
