@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000 / fps);
     }
 
+    // Fungsi cek visibility diubah, namun fungsi startCounting tetap dipanggil
     function checkVisibility() {
         if (!statsSection) return;
 
@@ -79,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sectionTop < windowHeight * 0.75 && !isCountingStarted) {
             isCountingStarted = true;
             counters.forEach(startCounting);
+            // Hapus listener agar tidak berjalan berulang
             window.removeEventListener('scroll', checkVisibility);
         }
     }
@@ -183,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Logika Alur QRIS ---
     
     // Step 1: QRIS
-    // Logika eWalletSelect (yang dihapus) sudah tidak ada, jadi tombol next sekarang selalu aktif.
     btnNextToUpload.addEventListener('click', () => {
         step1.style.display = 'none';
         step2.style.display = 'block';
@@ -309,6 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ccStep3.style.display = 'block';
                     
                     // Siapkan link WA admin
+                    // Menggunakan nomor WA Admin yang di hardcode (contoh 6281234567890)
                     const waMessage = `Halo Admin Livia, saya ingin memproses Subjek/ID Call Center: *${callCenterID}*. Mohon bantuannya.`;
                     waAdminLinkCc.href = `https://wa.me/6281234567890?text=${encodeURIComponent(waMessage)}`; 
                 }, 500); 
@@ -318,6 +320,35 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(ccProgressInterval);
         ccProgressInterval = setInterval(increaseProgress, 300); 
     }
+
+    // ===========================================
+    // BAGIAN D: ANIMASI SCROLL (FADE UP) BARU
+    // ===========================================
+    
+    // Pilih semua elemen dengan kelas 'animate-on-scroll'
+    const sectionsToAnimate = document.querySelectorAll('.animate-on-scroll');
+
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Tambahkan kelas is-visible untuk memicu animasi CSS
+                entry.target.classList.add('is-visible');
+                // Hentikan pengamatan pada elemen ini setelah animasi dipicu
+                observer.unobserve(entry.target); 
+            }
+        });
+    }, { 
+        // Trigger saat 10% dari elemen terlihat
+        threshold: 0.1, 
+        // Margin bawah agar elemen mulai memudar sedikit lebih awal
+        rootMargin: '0px 0px -50px 0px' 
+    });
+
+    // Mulai mengamati setiap elemen
+    sectionsToAnimate.forEach(section => {
+        scrollObserver.observe(section);
+    });
+
 
     // --- Global Listener untuk Menutup Modal ---
     window.addEventListener('click', (event) => {
