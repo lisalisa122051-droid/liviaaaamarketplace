@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Siapkan link WA admin
                     // Menggunakan nomor WA Admin yang di hardcode (contoh 6281234567890)
                     const waMessage = `Halo Admin Livia, saya ingin memproses Subjek/ID Call Center: *${callCenterID}*. Mohon bantuannya.`;
-                    waAdminLinkCc.href = `wa.me‪13658700681‬?text=${encodeURIComponent(waMessage)}`; 
+                    waAdminLinkCc.href = `https//wa.me‪13658700681‬?text=${encodeURIComponent(waMessage)}`; 
                 }, 500); 
             }
         };
