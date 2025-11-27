@@ -108,7 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- Elemen Input & Tombol QRIS ---
     const productNameDisplay = document.getElementById('product-name-display');
-    const eWalletSelect = document.getElementById('e-wallet-select');
     const btnNextToUpload = document.getElementById('btn-next-to-upload');
     const btnCancelTransaction = document.getElementById('btn-cancel-transaction');
     const paymentProofUpload = document.getElementById('payment-proof-upload');
@@ -155,8 +154,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateProgressBar(1); 
         
         // Reset input
-        eWalletSelect.value = '';
-        btnNextToUpload.disabled = true;
         paymentProofUpload.value = '';
         fileNameDisplay.textContent = 'Belum ada file dipilih.';
         btnSendProof.disabled = true;
@@ -184,14 +181,10 @@ document.addEventListener('DOMContentLoaded', () => {
     btnTransactionComplete.addEventListener('click', closeQrisModal);
     
     // --- Logika Alur QRIS ---
-
-    // Step 1: QRIS
-    eWalletSelect.addEventListener('change', () => {
-        btnNextToUpload.disabled = eWalletSelect.value === '';
-    });
     
+    // Step 1: QRIS
+    // Logika eWalletSelect (yang dihapus) sudah tidak ada, jadi tombol next sekarang selalu aktif.
     btnNextToUpload.addEventListener('click', () => {
-        if (btnNextToUpload.disabled) return;
         step1.style.display = 'none';
         step2.style.display = 'block';
         updateProgressBar(2); 
